@@ -1,0 +1,4 @@
+trpc.context.application.name=应用名
+trpc.context.base.package=扫描基础包地址
+trpc.zookeeper.address=zookeeper地址
+trpc.zookeeper.timeout=zookeeper超时时间
