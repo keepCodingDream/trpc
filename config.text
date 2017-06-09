@@ -1,4 +1,6 @@
-trpc.context.application.name=应用名
+trpc.context.register.type=注册类型(默认zookeeper)
+trpc.context.application.name=应用名(应用的接口)
+trpc.context.application.ip=应用Ip
+trpc.context.application.port=应用Port
 trpc.context.base.package=扫描基础包地址
 trpc.zookeeper.address=zookeeper地址
-trpc.zookeeper.timeout=zookeeper超时时间

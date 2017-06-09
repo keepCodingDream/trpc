@@ -18,9 +18,10 @@ public @interface Provider {
      */
     String value() default "";
 
-    String ip() default "";
-
-    String port() default "9200";
+    /**
+     * 服务版本
+     */
+    String version() default "0.0.1";
 
     /**
      * 服务提供的协议

@@ -13,6 +13,7 @@ public class NodeInfo {
     private String implName;
     private String ip;
     private String port;
+    private String version;
     private TProtocol protocol;
     private TLoadBalance loadBalanceType;
 }

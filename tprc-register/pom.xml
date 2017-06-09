@@ -9,7 +9,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>register</artifactId>
+    <artifactId>trpc-register</artifactId>
     <packaging>jar</packaging>
 
     <name>register</name>
@@ -24,6 +24,12 @@
             <groupId>com.tracy.trpc</groupId>
             <artifactId>trpc-common</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>servlet-api</artifactId>
+            <scope>provided</scope>
+            <version>2.5</version>
         </dependency>
     </dependencies>
 </project>
