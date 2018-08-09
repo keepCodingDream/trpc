@@ -1,7 +1,6 @@
-package com.tracy.trpc.demo.add;
+package com.tracy.trpc.demo.base;
 
 import com.tracy.trpc.common.annotation.Provider;
-import com.tracy.trpc.demo.base.Demo;
 
 import java.io.Serializable;
 
@@ -9,9 +8,9 @@ import java.io.Serializable;
  * Created by lurenjie on 2017/6/8
  */
 @Provider
-public class DemoClass2 implements Demo, Serializable {
+public class DemoImpl implements Demo, Serializable {
     @Override
     public String sayHello(String name) {
-        return "hello2 " + name;
+        return "hello " + name;
     }
 }

@@ -96,8 +96,9 @@
         </plugins>
     </build>
     <modules>
-        <module>tprc-register</module>
+        <module>trpc-register</module>
         <module>trpc-common</module>
         <module>trpc-demo</module>
+        <module>trpc-protocol</module>
     </modules>
 </project>

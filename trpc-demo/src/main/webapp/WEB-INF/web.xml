@@ -7,6 +7,9 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath*:/spring.xml</param-value>
     </context-param>
+    <listener>
+        <listener-class>com.tracy.trpc.register.RegisterContextInitializer</listener-class>
+    </listener>
     <filter>
         <filter-name>encodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

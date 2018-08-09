@@ -1,0 +1,33 @@
+<?xml   version="1.0"   encoding="UTF-8"   ?>
+<!DOCTYPE   log4j:configuration   SYSTEM   "log4j.dtd">
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+ 
+	<!-- 控制台日志 -->
+	<appender name="console"
+		class="org.apache.log4j.ConsoleAppender">
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="%d{yyyy-MM-dd HH:mm:ss} %p %m (%c.java:%L) %n" />
+		</layout>
+	</appender>
+	
+	 
+	<root>
+		<priority value ="info"/>
+		<appender-ref ref="console" />
+	</root>
+
+    <logger name="org.springframework.web.client">
+        <level value="info"/>
+    </logger>
+    <logger name="org.springframework.web.client.RestTemplate">
+        <level value="info"/>
+    </logger>
+    <logger name="httpclient.wire">
+        <level value="info"/>
+    </logger>
+    <logger name="org.apache.commons.httpclient">
+        <level value="info"/>
+    </logger>
+
+</log4j:configuration>
