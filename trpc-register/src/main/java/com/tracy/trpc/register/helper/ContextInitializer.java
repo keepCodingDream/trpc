@@ -5,6 +5,7 @@ import com.tracy.trpc.common.IpHelper;
 import com.tracy.trpc.common.annotation.Provider;
 import com.tracy.trpc.common.context.DefaultProxyContext;
 import com.tracy.trpc.common.model.NodeInfo;
+import com.tracy.trpc.protocol.netty.server.NettyServer;
 import com.tracy.trpc.register.register.Register;
 import org.springframework.util.StringUtils;
 
@@ -82,5 +83,10 @@ public class ContextInitializer {
                 }
             }
         }
+        NettyServer server = new NettyServer();
+        String port = properties.getProperty("trpc.context.server.port");
+        port = StringUtils.isEmpty(port) ? "9090" : port;
+        server.startServer(Integer.valueOf(port));
+
     }
 }

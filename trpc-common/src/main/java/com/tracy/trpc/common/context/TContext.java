@@ -21,5 +21,5 @@ public interface TContext {
      * @param interfaceName 接口名
      * @return 代理类对象
      */
-    <T> T getBean(Class<T> cls, String interfaceName);
+    Object getBean(String interfaceName);
 }

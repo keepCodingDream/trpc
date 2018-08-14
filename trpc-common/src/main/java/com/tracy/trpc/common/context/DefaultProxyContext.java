@@ -33,7 +33,7 @@ public class DefaultProxyContext implements TContext {
     }
 
     @Override
-    public <T> T getBean(Class<T> cls, String interfaceName) {
-        return (T) context.get(interfaceName);
+    public Object getBean(String interfaceName) {
+        return context.get(interfaceName);
     }
 }

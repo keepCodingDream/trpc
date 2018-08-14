@@ -9,19 +9,15 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.imps.CuratorFrameworkState;
 import org.apache.zookeeper.CreateMode;
-import org.springframework.stereotype.Service;
 
 import javax.annotation.PreDestroy;
-import javax.annotation.Resource;
 import java.nio.charset.Charset;
 
 /**
  * Created by lurenjie on 2017/6/8
  */
 @Slf4j
-@Service
 public class ZookeeperRegister implements Register {
-    @Resource
     private CuratorFramework zkClient;
 
     public ZookeeperRegister() throws Exception {
