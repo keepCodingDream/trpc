@@ -1,6 +1,14 @@
 trpc.context.register.type=注册类型(默认zookeeper)
-trpc.context.application.name=应用名(应用的接口)
-trpc.context.application.ip=应用Ip
-trpc.context.application.port=应用Port
+----provider
+trpc.context.provider.name=应用名(应用的接口)
+trpc.context.provider.ip=应用Ip
+trpc.context.provider.port=应用Port
+trpc.context.provider.version=应用version
+----consumer
+trpc.context.consumer.name=应用名(应用的接口)
+trpc.context.consumer.ip=应用Ip
+trpc.context.consumer.port=应用Port
+trpc.context.consumer.version=应用version
+
 trpc.context.base.package=扫描基础包地址
 trpc.zookeeper.address=zookeeper地址

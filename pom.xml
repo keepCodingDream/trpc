@@ -102,5 +102,6 @@
         <module>trpc-protocol</module>
         <module>trpc-consumer</module>
         <module>trpc-test</module>
+        <module>trpc-core</module>
     </modules>
 </project>

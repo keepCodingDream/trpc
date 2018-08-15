@@ -37,10 +37,11 @@ public class ZookeeperRegister implements Register {
         if (zkClient.getState() == CuratorFrameworkState.LATENT) {
             zkClient.start();
         }
+        String zkPath = CommonUtil.getZkPath(nodeInfo);
         zkClient.create().creatingParentsIfNeeded()
                 .withMode(CreateMode.EPHEMERAL)
-                .forPath(CommonUtil.getZkPath(nodeInfo), JSON.toJSONString(nodeInfo).getBytes(Charset.forName("UTF-8")));
-        log.info("=======service :{} registry finish!=======", nodeInfo.getInterfaceName());
+                .forPath(zkPath, JSON.toJSONString(nodeInfo).getBytes(Charset.forName("UTF-8")));
+        log.info("=======service :{} registry finish!=======", nodeInfo.getApplicationName());
 
     }
 

@@ -1,7 +1,6 @@
 package com.tracy.trpc.common;
 
 import com.tracy.trpc.common.model.NodeInfo;
-import org.springframework.util.StringUtils;
 
 /**
  * @author tracy.
@@ -18,10 +17,10 @@ public class CommonUtil {
      * @return zk地址
      */
     public static String getZkPath(NodeInfo nodeInfo) {
-        if (!StringUtils.isEmpty(nodeInfo.getInterfaceName())) {
-            return SPLIT + Constants.ZK_PATH_PROVIDER + SPLIT + nodeInfo.getApplicationName() + SPLIT + nodeInfo.getInterfaceName() + SPLIT + nodeInfo.getVersion();
+        if (nodeInfo.getIsProvider() != null && nodeInfo.getIsProvider()) {
+            return SPLIT + Constants.ZK_PATH_PROVIDER + SPLIT + nodeInfo.getApplicationName() + SPLIT + nodeInfo.getVersion() + SPLIT + nodeInfo.getIp();
         } else {
-            return SPLIT + Constants.ZK_PATH_PROVIDER + SPLIT + nodeInfo.getApplicationName();
+            return SPLIT + Constants.ZK_PATH_PROVIDER + SPLIT + nodeInfo.getApplicationName() + SPLIT + nodeInfo.getVersion();
         }
     }
 }

@@ -14,9 +14,5 @@ import java.util.Properties;
 public class RegisterTest {
     @Test
     public void testRegisterCorrect() throws Exception {
-        Register register = new ZookeeperRegister();
-        ContextInitializer util = new ContextInitializer(register);
-        Properties properties = CommonUtil.getProperties("/trpc.properties");
-        util.init(properties);
     }
 }

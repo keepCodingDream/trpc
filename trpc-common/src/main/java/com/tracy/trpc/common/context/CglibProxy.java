@@ -1,8 +1,7 @@
 package com.tracy.trpc.common.context;
 
-import org.springframework.cglib.proxy.Enhancer;
-import org.springframework.cglib.proxy.MethodInterceptor;
-import org.springframework.cglib.proxy.MethodProxy;
+
+import net.sf.cglib.proxy.*;
 
 import java.lang.reflect.Method;
 
@@ -41,8 +40,9 @@ public class CglibProxy implements MethodInterceptor {
          * <p>
          * 'NoOp.INSTANCE' means do noting
          */
-//        enhancer.setCallbacks(new Callback[]{this, NoOp.INSTANCE});
-//        enhancer.setCallbackFilter(new AdminSayCallBackFilter());
+        enhancer.setCallbacks(new Callback[]{this, NoOp.INSTANCE});
+        //这里可以添加多个filter提供扩展
+        enhancer.setCallbackFilter(new DefaultCallBackFilter());
         return (T) enhancer.create();
     }
 

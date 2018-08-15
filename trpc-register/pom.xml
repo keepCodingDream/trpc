@@ -12,7 +12,7 @@
     <artifactId>trpc-register</artifactId>
     <packaging>jar</packaging>
 
-    <name>register</name>
+    <name>trpc-register</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -21,15 +21,15 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.tracy.trpc</groupId>
-            <artifactId>trpc-protocol</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <scope>provided</scope>
             <version>2.5</version>
+        </dependency>
+        <dependency>
+            <groupId>com.tracy.trpc</groupId>
+            <artifactId>trpc-common</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

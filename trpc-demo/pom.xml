@@ -20,7 +20,7 @@
         </dependency>
         <dependency>
             <groupId>com.tracy.trpc</groupId>
-            <artifactId>trpc-register</artifactId>
+            <artifactId>trpc-core</artifactId>
             <version>${project.version}</version>
         </dependency>
         <dependency>

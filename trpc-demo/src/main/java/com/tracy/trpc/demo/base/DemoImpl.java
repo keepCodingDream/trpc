@@ -1,6 +1,7 @@
 package com.tracy.trpc.demo.base;
 
 import com.tracy.trpc.common.annotation.Provider;
+import com.tracy.trpc.common.demo.Demo;
 
 import java.io.Serializable;
 

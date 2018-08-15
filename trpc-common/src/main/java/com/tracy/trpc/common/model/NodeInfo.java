@@ -14,6 +14,7 @@ public class NodeInfo {
     private String ip;
     private String port;
     private String version;
+    private Boolean isProvider;
     private TProtocol protocol;
     private TLoadBalance loadBalanceType;
 }

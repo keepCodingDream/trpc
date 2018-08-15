@@ -8,7 +8,7 @@
         <param-value>classpath*:/spring.xml</param-value>
     </context-param>
     <listener>
-        <listener-class>com.tracy.trpc.register.RegisterContextInitializer</listener-class>
+        <listener-class>com.tracy.trpc.core.ContextInitializer</listener-class>
     </listener>
     <filter>
         <filter-name>encodingFilter</filter-name>

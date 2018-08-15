@@ -2,6 +2,7 @@ package com.tracy.trpc.consumer.helper;
 
 import com.tracy.trpc.common.model.NodeInfo;
 
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -16,5 +17,5 @@ public interface Loader {
      *
      * @return 远程节点信息
      */
-    NodeInfo load(Properties properties);
+    List<NodeInfo> load(Properties properties);
 }

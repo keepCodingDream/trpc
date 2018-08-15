@@ -1,11 +1,11 @@
 package com.tracy.trpc.register.helper;
 
 import com.tracy.trpc.common.ClassHelper;
+import com.tracy.trpc.common.Constants;
 import com.tracy.trpc.common.IpHelper;
 import com.tracy.trpc.common.annotation.Provider;
 import com.tracy.trpc.common.context.DefaultProxyContext;
 import com.tracy.trpc.common.model.NodeInfo;
-import com.tracy.trpc.protocol.netty.server.NettyServer;
 import com.tracy.trpc.register.register.Register;
 import org.springframework.util.StringUtils;
 
@@ -35,18 +35,23 @@ public class ContextInitializer {
      * @throws Exception if anything need stop
      */
     public void init(Properties properties) throws Exception {
-        String basePackage = properties.getProperty("trpc.context.base.package");
-        String applicationName = properties.getProperty("trpc.context.application.name");
-        String applicationIp = properties.getProperty("trpc.context.application.ip");
-        String applicationPort = properties.getProperty("trpc.context.application.port");
+        String basePackage = properties.getProperty(Constants.BASE_PACKAGE);
+        String applicationName = properties.getProperty(Constants.PROVIDER_NAME);
+        String applicationIp = properties.getProperty(Constants.PROVIDER_IP);
+        String applicationPort = properties.getProperty(Constants.PROVIDER_PORT);
+        String applicationVersion = properties.getProperty(Constants.PROVIDER_VERSION);
+        if (StringUtils.isEmpty(applicationVersion)) {
+            applicationVersion = "0.0.1";
+        }
+
         if (StringUtils.isEmpty(basePackage)) {
-            throw new IllegalArgumentException("trpc.context.base.package属性不能为空");
+            throw new IllegalArgumentException(Constants.BASE_PACKAGE + "属性不能为空");
         }
         if (StringUtils.isEmpty(applicationName)) {
-            throw new IllegalArgumentException("trpc.context.application.name属性不能为空");
+            throw new IllegalArgumentException(Constants.PROVIDER_NAME + "属性不能为空");
         }
         if (StringUtils.isEmpty(applicationPort)) {
-            throw new IllegalArgumentException("trpc.context.application.port属性不能为空");
+            throw new IllegalArgumentException(Constants.PROVIDER_PORT + "属性不能为空");
         }
         //获取扫描包下的所有类
         Set<Class<?>> classes = ClassHelper.getClasses(basePackage);
@@ -56,37 +61,32 @@ public class ContextInitializer {
             if (provider != null) {
                 Class<?>[] interfaces = item.getInterfaces();
                 boolean flag = true;
+                String[] methodArr = item.getName().split("[.]");
                 for (Class inter : interfaces) {
-                    if (item.getName().contains(inter.getName())) {
-                        NodeInfo info = new NodeInfo();
-                        info.setApplicationName(applicationName);
-                        info.setInterfaceName(inter.getName());
-                        info.setImplName(item.getName());
-                        if (!StringUtils.isEmpty(applicationIp)) {
-                            info.setIp(applicationIp);
-                        } else {
-                            info.setIp(IpHelper.localIpAddress());
-                        }
-                        info.setPort(applicationPort);
-                        info.setProtocol(provider.protocol());
-                        info.setVersion(provider.version());
-                        info.setLoadBalanceType(provider.loadBalanceType());
-                        register.registry(info);
+                    String[] interArr = inter.getName().split("[.]");
+                    if (methodArr[methodArr.length - 1].contains(interArr[interArr.length - 1])) {
                         DefaultProxyContext.getInstants().setBean(item, inter.getName());
                         flag = false;
                         break;
                     }
                 }
                 if (flag) {
-                    throw new RuntimeException("Bean :{} find no interface.Please check the name of your service interface." +
+                    throw new RuntimeException("Bean:" + item.getName() + "find no interface.Please check the name of your service interface." +
                             "Such as interface name : Demo and service name : DemoImpl");
                 }
             }
         }
-        NettyServer server = new NettyServer();
-        String port = properties.getProperty("trpc.context.server.port");
-        port = StringUtils.isEmpty(port) ? "9090" : port;
-        server.startServer(Integer.valueOf(port));
+        NodeInfo info = new NodeInfo();
+        info.setApplicationName(applicationName);
+        if (!StringUtils.isEmpty(applicationIp)) {
+            info.setIp(applicationIp);
+        } else {
+            info.setIp(IpHelper.localIpAddress());
+        }
+        info.setPort(applicationPort);
+        info.setVersion(applicationVersion);
+        info.setIsProvider(true);
+        register.registry(info);
 
     }
 }
