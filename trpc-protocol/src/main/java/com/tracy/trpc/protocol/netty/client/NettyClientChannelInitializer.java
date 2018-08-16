@@ -17,6 +17,6 @@ public class NettyClientChannelInitializer extends ChannelInitializer<SocketChan
         ChannelPipeline pipeline = socketChannel.pipeline();
         pipeline.addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 2, 0, 2))
                 .addLast(new LengthFieldPrepender(2))
-                .addLast(new NettyChannelHandler());
+                .addLast(new NettyClientHandler());
     }
 }

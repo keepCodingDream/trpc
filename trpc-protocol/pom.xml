@@ -21,11 +21,11 @@
             <artifactId>trpc-common</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>com.tracy.trpc</groupId>
-            <artifactId>trpc-register</artifactId>
-            <version>${project.version}</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.tracy.trpc</groupId>-->
+            <!--<artifactId>trpc-register</artifactId>-->
+            <!--<version>${project.version}</version>-->
+        <!--</dependency>-->
     </dependencies>
 
 </project>

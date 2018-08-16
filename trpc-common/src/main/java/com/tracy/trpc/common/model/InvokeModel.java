@@ -10,6 +10,7 @@ import java.util.Map;
 @Data
 public class InvokeModel {
     private TProtocol tProtocol = TProtocol.NETTY;
+    private Long requestId;
     private String interfaceName;
     private String method;
     private Object[] invokeParams;

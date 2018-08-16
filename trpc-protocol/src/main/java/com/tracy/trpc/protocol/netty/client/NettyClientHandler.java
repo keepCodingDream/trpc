@@ -23,6 +23,7 @@ public class NettyClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
     protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
         try {
             ResponseModel responseModel = JSON.parseObject(msg.toString(), ResponseModel.class);
+
             //是不是搞个异步
             Object content = responseModel.getContent();
         } finally {

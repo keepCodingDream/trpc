@@ -1,6 +1,5 @@
 package com.tracy.trpc.protocol.netty.client;
 
-import com.tracy.trpc.protocol.netty.server.NettyChannelHandler;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.*;
 import io.netty.channel.epoll.Epoll;
@@ -18,9 +17,15 @@ import io.netty.handler.codec.LengthFieldPrepender;
  **/
 public class NettyClient {
 
-    private EventLoopGroup workerGroup = Epoll.isAvailable() ? new EpollEventLoopGroup(Runtime.getRuntime().availableProcessors()) : new NioEventLoopGroup(Runtime.getRuntime().availableProcessors());
-
-    private Channel connect(String host, int port) {
+    /**
+     * 连接远程服务
+     *
+     * @param host 远程地址
+     * @param port 远程端口
+     * @return 通信端口
+     */
+    public Channel connect(String host, int port) {
+        EventLoopGroup workerGroup = Epoll.isAvailable() ? new EpollEventLoopGroup(1) : new NioEventLoopGroup(1);
         Bootstrap b = new Bootstrap();
         b.group(workerGroup)
                 .channel(Epoll.isAvailable() ? EpollSocketChannel.class : NioSocketChannel.class)
@@ -31,7 +36,7 @@ public class NettyClient {
                         ch.pipeline()
                                 .addLast(new LengthFieldBasedFrameDecoder(Integer.MAX_VALUE, 0, 2, 0, 2))
                                 .addLast(new LengthFieldPrepender(2))
-                                .addLast(new NettyChannelHandler());
+                                .addLast(new NettyClientChannelInitializer());
                     }
                 });
         ChannelFuture f = b.connect(host, port);

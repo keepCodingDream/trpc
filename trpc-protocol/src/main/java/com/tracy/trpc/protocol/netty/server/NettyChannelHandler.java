@@ -33,7 +33,7 @@ public class NettyChannelHandler extends SimpleChannelInboundHandler<ByteBuf> {
             ResponseModel response = new ResponseModel();
             response.setTProtocol(content.getTProtocol());
             response.setContent(result);
-            //todo 是不是搞个异步
+            response.setRequestId(content.getRequestId());
             ctx.writeAndFlush(response);
         } finally {
             //it is base on the reference count.if not release, It can not collect by GC
