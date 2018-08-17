@@ -32,12 +32,11 @@ public class NettyServer {
                         bootstrap = new ServerBootstrap()
                                 .group(bossGroup, workerGroup)
                                 .channel(Epoll.isAvailable() ? EpollServerSocketChannel.class : NioServerSocketChannel.class)
-                                .childHandler(new NettyChannelInitializer())
                                 .childOption(ChannelOption.SO_KEEPALIVE, true)
-                                .childOption(ChannelOption.TCP_NODELAY, true);
+                                .childOption(ChannelOption.TCP_NODELAY, true)
+                                .childHandler(new NettyChannelInitializer());
                         Channel channel = bootstrap.bind(port).sync().channel();
                         channel.closeFuture().sync();
-                        log.info("TRPC start successfully!");
                     } catch (Exception e) {
                         log.error("TRPC start server error will exit", e);
                         throw new RuntimeException(e);

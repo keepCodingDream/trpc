@@ -5,15 +5,19 @@ import com.tracy.trpc.common.context.DefaultProxyContext;
 import com.tracy.trpc.common.model.InvokeModel;
 import com.tracy.trpc.common.model.ResponseModel;
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.ReferenceCountUtil;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Method;
 
 /**
  * @author tracy
  */
+@Slf4j
+@ChannelHandler.Sharable
 public class NettyChannelHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
     @Override
@@ -24,8 +28,14 @@ public class NettyChannelHandler extends SimpleChannelInboundHandler<ByteBuf> {
     }
 
     @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        log.info("channelActive");
+    }
+
+    @Override
     protected void channelRead0(ChannelHandlerContext ctx, ByteBuf msg) throws Exception {
         try {
+            log.info("request received!");
             InvokeModel content = JSON.parseObject(msg.toString(), InvokeModel.class);
             Object inst = DefaultProxyContext.getInstants().getBean(content.getInterfaceName());
             Method method = inst.getClass().getMethod(content.getMethod(), content.getParamsCls());

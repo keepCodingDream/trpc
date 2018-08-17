@@ -3,6 +3,7 @@ package com.tracy.trpc.protocol.netty.client;
 import com.alibaba.fastjson.JSON;
 import com.tracy.trpc.common.model.ResponseModel;
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.ReferenceCountUtil;
@@ -10,6 +11,7 @@ import io.netty.util.ReferenceCountUtil;
 /**
  * @author tracy
  */
+@ChannelHandler.Sharable
 public class NettyClientHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
     @Override
