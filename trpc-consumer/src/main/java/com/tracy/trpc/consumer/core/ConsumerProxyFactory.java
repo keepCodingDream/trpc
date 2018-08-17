@@ -6,11 +6,9 @@ import com.tracy.trpc.common.annotation.Consumer;
 import com.tracy.trpc.consumer.strategy.IStrategy;
 import com.tracy.trpc.consumer.strategy.PollingStrategy;
 import com.tracy.trpc.protocol.rpc.RpcCall;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.support.BeanDefinitionBuilder;
 import org.springframework.beans.factory.support.DefaultListableBeanFactory;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
+import org.springframework.beans.factory.support.GenericBeanDefinition;
 import org.springframework.context.ConfigurableApplicationContext;
 
 import java.util.List;
@@ -21,8 +19,7 @@ import java.util.Set;
  * @author tracy.
  * @create 2018-08-13 16:32
  **/
-public class ConsumerProxyFactory implements ApplicationContextAware {
-    private ApplicationContext applicationContext;
+public class ConsumerProxyFactory {
 
     /**
      * @param properties 基本配置信息
@@ -32,22 +29,27 @@ public class ConsumerProxyFactory implements ApplicationContextAware {
     public void createProxy(Properties properties, String appName, List<RpcCall> rpcCalls) {
         String basePackage = properties.getProperty(Constants.BASE_PACKAGE);
         Set<Class<?>> classes = ClassHelper.getClasses(basePackage);
-        for (Class item : classes) {
-            Consumer consumer = (Consumer) item.getAnnotation(Consumer.class);
+        for (Class<?> item : classes) {
+            Consumer consumer = item.getAnnotation(Consumer.class);
             if (consumer != null && item.isInterface()) {
                 String[] midArr = item.getName().split("[.]");
                 String beanName = midArr[midArr.length - 1];
+                beanName = beanName.substring(0, 1).toLowerCase() + beanName.substring(1);
                 IStrategy strategy = new PollingStrategy(rpcCalls);
-                ProxyFactory factory = new ProxyFactory(strategy, item.getName());
-                Object object = factory.getProxyInstance(item);
                 //将applicationContext转换为ConfigurableApplicationContext
-                ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext) applicationContext;
+                ConfigurableApplicationContext configurableApplicationContext = (ConfigurableApplicationContext) SpringContext.getApplicationContext();
                 // 获取bean工厂并转换为DefaultListableBeanFactory
                 DefaultListableBeanFactory defaultListableBeanFactory = (DefaultListableBeanFactory) configurableApplicationContext.getBeanFactory();
                 // 通过BeanDefinitionBuilder创建bean定义
                 BeanDefinitionBuilder beanDefinitionBuilder = BeanDefinitionBuilder.genericBeanDefinition(item);
+                GenericBeanDefinition definition = (GenericBeanDefinition) beanDefinitionBuilder.getRawBeanDefinition();
+                definition.getPropertyValues().add("interfaceClass", definition.getBeanClassName());
+                definition.getPropertyValues().add("interfaceName", item.getName());
+                definition.getPropertyValues().add("strategy", strategy);
+                definition.setBeanClass(ProxyFactory.class);
+                definition.setAutowireMode(GenericBeanDefinition.AUTOWIRE_BY_NAME);
                 // 注册bean
-                defaultListableBeanFactory.registerBeanDefinition(beanName, beanDefinitionBuilder.getRawBeanDefinition());
+                defaultListableBeanFactory.registerBeanDefinition(beanName, definition);
             }
         }
     }
@@ -57,9 +59,4 @@ public class ConsumerProxyFactory implements ApplicationContextAware {
         return null;
     }
 
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        this.applicationContext = applicationContext;
-    }
 }

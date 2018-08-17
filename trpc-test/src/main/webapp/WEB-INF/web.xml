@@ -7,9 +7,6 @@
         <param-name>contextConfigLocation</param-name>
         <param-value>classpath*:/spring.xml</param-value>
     </context-param>
-    <listener>
-        <listener-class>com.tracy.trpc.core.ContextInitializer</listener-class>
-    </listener>
     <filter>
         <filter-name>encodingFilter</filter-name>
         <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -31,7 +28,13 @@
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>/</url-pattern>
     </servlet-mapping>
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
 
+    <listener>
+        <listener-class>com.tracy.trpc.core.ContextInitializer</listener-class>
+    </listener>
 
     <session-config>
         <session-timeout>10</session-timeout>
