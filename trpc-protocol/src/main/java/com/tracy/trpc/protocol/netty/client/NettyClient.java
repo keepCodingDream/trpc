@@ -34,7 +34,7 @@ public class NettyClient {
                 .option(ChannelOption.TCP_NODELAY, true)
                 .option(ChannelOption.SO_KEEPALIVE, true)
                 .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
-                .handler(new NettyChannelInitializer());
+                .handler(new NettyClientChannelInitializer());
         ChannelFuture f = b.connect(host, port);
         return f.channel();
     }

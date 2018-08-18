@@ -45,6 +45,7 @@ public class ProxyBuilder implements InvocationHandler {
         invokeModel.setInterfaceName(interfaceName);
         invokeModel.setMethod(method.getName());
         invokeModel.setInvokeParams(args);
-        return call.invoke(invokeModel);
+        invokeModel.setParamsCls(method.getParameterTypes());
+        return call.invoke(invokeModel).getContent();
     }
 }
