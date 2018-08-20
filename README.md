@@ -48,7 +48,7 @@ public class DemoImpl implements Demo, Serializable {
 }
 ```
 
-6.最后在需要注入的地方注入接口即可使用
+6.在需要注入的地方注入接口即可使用
 
 ```
 @RestController
@@ -62,6 +62,36 @@ public class TestController {
         return demo.sayHello(world);
     }
 }
+```
+7.最后，也是最重要的，就是要加上服务配置
+
+#####服务端配置
+
+```
+#zookeeper地址
+trpc.zookeeper.address=127.0.0.1:2181
+#服务名称
+trpc.context.provider.name=demo
+#服务版本号
+trpc.context.provider.version=0.0.1
+#服务端ip(可为空，为空时取本机ip)
+trpc.context.provider.ip=
+#服务端端口号
+trpc.context.provider.port=9090
+#扫描服务的基础包路径(包含@Provider 注解的类路径)
+trpc.context.base.package=com.tracy.trpc.demo.base
 
 ```
 
+#####客户端端配置
+
+```
+#zookeeper地址
+trpc.zookeeper.address=127.0.0.1:2181
+#服务名称
+trpc.context.consumer.name=demo
+#服务版本号
+trpc.context.consumer.version=0.0.1
+#扫描服务的基础包路径(包含@Consumer 注解的类路径)
+trpc.context.base.package=com.tracy.trpc.common
+```
